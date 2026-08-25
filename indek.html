@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday 🌸</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="p.css">
+</head>
+<body>
+
+<!-- PETAL CANVAS -->
+<div class="petal-canvas" id="petalCanvas"></div>
+
+<!-- LIGHTBOX -->
+<div id="lightbox">
+  <button id="lightbox-close">✕</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<!-- BIRTHDAY POPUP -->
+<div id="birthday-popup">
+  <div class="popup-card">
+    <button class="popup-close-x" onclick="closePopup()">✕</button>
+    <span class="popup-cake">🎂</span>
+    <div class="popup-title">Happy Birthday!</div>
+    <div class="popup-sub">The most special Yor 🌸<br>May all your wishes come true today</div>
+    <button class="popup-close" onclick="closePopup()">Thank you 💕</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     1. LOADING SCREEN
+══════════════════════════════ -->
+<div id="loading">
+  <svg class="loading-flower" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <g transform="translate(50,50)">
+      <ellipse rx="10" ry="25" fill="#FFB6C1" transform="rotate(0)"/>
+      <ellipse rx="10" ry="25" fill="#FF8FAB" transform="rotate(45)"/>
+      <ellipse rx="10" ry="25" fill="#FFB6C1" transform="rotate(90)"/>
+      <ellipse rx="10" ry="25" fill="#FF8FAB" transform="rotate(135)"/>
+      <ellipse rx="10" ry="25" fill="#FFB6C1" transform="rotate(180)"/>
+      <ellipse rx="10" ry="25" fill="#FF8FAB" transform="rotate(225)"/>
+      <ellipse rx="10" ry="25" fill="#FFB6C1" transform="rotate(270)"/>
+      <ellipse rx="10" ry="25" fill="#FF8FAB" transform="rotate(315)"/>
+      <circle r="13" fill="#FFC0CB"/>
+    </g>
+  </svg>
+  <div class="loading-text">Preparing something special for Yor...<br>✨ Please wait ✨</div>
+</div>
+
+<!-- ══════════════════════════════
+     2. PIN GATE
+══════════════════════════════ -->
+<div id="pin-gate">
+  <div class="pin-flower-top">🌸</div>
+  <div class="pin-title">Untuk Yor, Sayangku</div>
+  <div class="pin-sub">Masukkan kode rahasia kita</div>
+  <div class="pin-dots" id="pinDots">
+    <div class="pin-dot" id="d0"></div>
+    <div class="pin-dot" id="d1"></div>
+    <div class="pin-dot" id="d2"></div>
+    <div class="pin-dot" id="d3"></div>
+    <div class="pin-dot" id="d4"></div>
+    <div class="pin-dot" id="d5"></div> 
+  </div>
+  <div class="pin-hint">Petunjuk: kencan spesial kita 🤍</div>
+  <div class="pin-keypad">
+    <button class="pin-btn" onclick="pinInput('1')">1</button>
+    <button class="pin-btn" onclick="pinInput('2')">2</button>
+    <button class="pin-btn" onclick="pinInput('3')">3</button>
+    <button class="pin-btn" onclick="pinInput('4')">4</button>
+    <button class="pin-btn" onclick="pinInput('5')">5</button>
+    <button class="pin-btn" onclick="pinInput('6')">6</button>
+    <button class="pin-btn" onclick="pinInput('7')">7</button>
+    <button class="pin-btn" onclick="pinInput('8')">8</button>
+    <button class="pin-btn" onclick="pinInput('9')">9</button>
+    <button class="pin-btn del" onclick="pinDelete()">⌫</button>
+    <button class="pin-btn" onclick="pinInput('0')">0</button>
+    <button class="pin-btn confirm" onclick="pinConfirm()">✓</button>
+  </div>
+  <div class="pin-error" id="pinError">Hmm, Coba lagi, Sayang.💕</div>
+</div>
+
+<!-- ══════════════════════════════
+     3. GIFT BOX
+══════════════════════════════ -->
+<div id="gift-screen">
+  <div class="gift-box" id="giftBox" onclick="openGift()">🎁</div>
+  <div class="gift-text" id="giftText">Ketuk kotak hadiah untuk membukanya.🎁</div>
+</div>
+
+<!-- ══════════════════════════════
+     MAIN CONTENT
+══════════════════════════════ -->
+<div id="main">
+
+  <!-- 4. HERO + BOUQUET -->
+  <section class="hero">
+    <div class="hero-deco">🌸</div>
+    <div class="hero-title">Your Special Day</div>
+    <div class="hero-name">Happy Birthday<br>Yor</div>
+    <div class="hero-date">🌸 JUNE 10 · THE MOST SPECIAL DAY 🌸</div>
+
+    <div class="section reveal">
+      <div class="section-title">A Digital Bouquet</div>
+      <div class="section-divider">— 🌸 —</div>
+      <div class="bouquet-pot">🪴</div>
+      <div class="bouquet-flowers" id="bouquetFlowers">
+        <span class="b-flower" data-msg="🌹 Seperti halnya bunga mawar, kau indah di setiap musim—dengan segala durinya, kau sempurna." onclick="bloomFlower(this)">🌹</span>
+        <span class="b-flower" data-msg="🌻 kamu adalah cahaya hidupku. Bahkan di hari-hariku yang paling kelam, kamu membuat segalanya menjadi lebih cerah." onclick="bloomFlower(this)">🌻</span>
+        <span class="b-flower" data-msg="🌸 Seperti bunga sakura, setiap momen bersamamu terasa singkat namun indah dan tak terlupakan." onclick="bloomFlower(this)">🌸</span>
+        <span class="b-flower" data-msg="💐 Buket ini membawa segala perasaan yang tak mampu kuungkapkan dengan kata-kata—semuanya, ini untukmu." onclick="bloomFlower(this)">💐</span>
+        <span class="b-flower" data-msg="🌷 Lembut, elegan, dan anggun — itulah dirimu, senantiasa." onclick="bloomFlower(this)">🌷</span>
+        <span class="b-flower" data-msg="🌺 Tawamu adalah bunga terindah yang mekar di hatiku setiap hari." onclick="bloomFlower(this)">🌺</span>
+      </div>
+      <div class="flower-msg" id="flowerMsg"></div>
+    </div>
+  </section>
+
+  <!-- 5. LETTER -->
+  <section class="letter-section">
+    <div class="letter-inner reveal">
+      <div class="letter-eyebrow">Dari Lubuk Hatiku — Sebuah Surat untukmu</div>
+      <div class="letter-body">
+        <p>Yor-ku tersayang,</p>
+        <p>Di hari yang sangat istimewa ini, aku ingin kamu tahu betapa bersyukurnya aku memilikimu dalam hidupku. Kehadiranmu saja membuat hari-hari yang biasa terasa begitu luar biasa.</p>
+        <p>Terima kasih atas caramu tertawa—itu adalah suara paling tulus dan penuh sukacita yang pernah kudengar. Terima kasih atas kebaikanmu, atas caramu menunjukkan kepedulian tanpa perlu diminta. Terima kasih telah menjadi dirimu apa adanya, karena dirimu yang sekarang sudah lebih dari cukup.</p>
+        <p>Semoga ulang tahun ini menghadirkan segala kehangatan, sukacita, dan kasih sayang yang selama ini begitu tulus kamu berikan kepada orang-orang di sekitarmu. Semoga setiap impian yang kamu dambakan perlahan menjadi kenyataan bagimu. Kamu layak mendapatkan itu semua—segala hal yang indah.</p>
+        <div class="letter-sig">With all my love,<br>Lesmana 🤍</div>
+        <div class="letter-ps">Aku akan selalu ada untukmu, hari ini, esok, dan selamanya.🤍</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. PHOTO GALLERY -->
+  <section class="gallery-section">
+    <div class="section reveal">
+      <div class="section-title">Our Photo Memories</div>
+      <div class="section-divider">— 📷 —</div>
+    </div>
+    <div class="polaroids reveal" id="polaroids">
+      <div class="polaroid" onclick="openLightbox('photos/photo1.jpg')">
+        <img src="yor1.jpg" alt="Memory 1" onerror="this.style.background='linear-gradient(135deg,#F8BBD9,#CE93D8)';this.alt='📷'">
+        <div class="polaroid-caption">Matahari terbenam pertama kita bersama</div>
+      </div>
+      <div class="polaroid" onclick="openLightbox('photos/photo2.jpg')">
+        <img src="yor5.jpg" alt="Memory 2" onerror="this.style.background='linear-gradient(135deg,#F48FB1,#F8BBD9)';this.alt='☕'">
+        <div class="polaroid-caption">Kafe favorit kita di sudut kota</div>
+      </div>
+      <div class="polaroid" onclick="openLightbox('photos/photo3.jpg')">
+        <img src="yor6.jpg" alt="Memory 3" onerror="this.style.background='linear-gradient(135deg,#80DEEA,#F8BBD9)';this.alt='🐚'">
+        <div class="polaroid-caption">Pertama kali ke pantai, hanya kita berdua saja.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. TIMELINE -->
+  <section class="timeline-section">
+    <div class="section reveal">
+      <div class="section-title">Kenangan yang Kita Tulis Bersama</div>
+      <div class="section-divider">— 🕰️ —</div>
+    </div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-icon">🌱</div>
+        <div class="tl-content">
+          <div class="tl-label">Awal Mula</div>
+          <h4>Pertama Kali Kita Bertemu</h4>
+          <p>Sebuah momen yang tak kusangka akan mengubah segalanya.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-icon">💬</div>
+        <div class="tl-content">
+          <div class="tl-label">Momen Ajaib</div>
+          <h4>Percakapan Pertama Kita</h4>
+          <p>Kata-kata yang membuat waktu terasa seolah melambat.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-icon">🚶</div>
+        <div class="tl-content">
+          <div class="tl-label">Sebuah Kenangan Indah</div>
+          <h4>Pesiar Pertama Kami</h4>
+          <p>Dunia terasa lebih kecil dan lebih indah saat kau berada di sisiku.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-icon">😂</div>
+        <div class="tl-content">
+          <div class="tl-label">Momen Berharga</div>
+          <h4>Tawa yang Tak Pernah Usai</h4>
+          <p>Beberapa momen terbaik adalah momen-momen yang tidak masuk akal namun terasa sempurna.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-icon">🤍</div>
+        <div class="tl-content">
+          <div class="tl-label">Sebuah Kenangan Manis</div>
+          <h4>Keheningan Indah Bersama</h4>
+          <p>Keheningan tak pernah terasa sunyi saat aku bersamamu.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-icon">🎂</div>
+        <div class="tl-content">
+          <div class="tl-label">Hari ini</div>
+          <h4>Ulang Tahunmu yang Sangat Istimewa</h4>
+          <p>Dan hari ini, kita merayakan sosok paling luar biasa dalam duniaku — yor.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. MUSIC PLAYER -->
+  <section class="music-section">
+    <div class="section reveal">
+      <div class="section-title">Special Playlist</div>
+      <div class="section-divider">— 🎵 —</div>
+    </div>
+    <div class="player reveal">
+      <!-- Hidden audio element -->
+      <audio id="audioEl" preload="metadata"></audio>
+
+      <div class="vinyl" id="vinyl">
+        <div class="vinyl-center"></div>
+        <span class="vinyl-note" style="top:10px;left:50%;animation-delay:0s;">🎵</span>
+        <span class="vinyl-note" style="top:20px;left:30%;animation-delay:.6s;">♪</span>
+        <span class="vinyl-note" style="top:20px;left:70%;animation-delay:1.2s;">🎶</span>
+      </div>
+
+      <div class="player-track" id="playerTrack"></div>
+      <div class="player-artist" id="playerArtist"></div>
+
+      <div class="audio-notice" id="audioNotice"></div>
+
+      <!-- Progress bar -->
+      <div class="progress-wrap">
+        <span class="progress-time" id="timeCurrent">0:00</span>
+        <div class="progress-bar-bg" id="progressBg" onclick="seekAudio(event)">
+          <div class="progress-bar-fill" id="progressFill"></div>
+          <div class="progress-thumb" id="progressThumb"></div>
+        </div>
+        <span class="progress-time" id="timeDuration">0:00</span>
+      </div>
+
+      <!-- Controls -->
+      <div class="player-controls">
+        <button class="ctrl-btn" onclick="prevTrack()" title="Sebelumnya">⏮</button>
+        <button class="ctrl-btn play-btn" id="playBtn" onclick="togglePlay()" title="Play/Pause">▶</button>
+        <button class="ctrl-btn" onclick="nextTrack()" title="Berikutnya">⏭</button>
+      </div>
+
+      <!-- Volume -->
+      <div class="volume-wrap">
+        <span class="vol-icon" onclick="toggleMute()">🔊</span>
+        <input type="range" class="vol-slider" id="volSlider" min="0" max="1" step="0.05" value="0.8" oninput="setVolume(this.value)">
+      </div>
+
+      <!-- Playlist -->
+      <div class="playlist">
+        <div class="pl-item active" onclick="selectTrack(0)">
+          <span class="pl-num">1</span>
+          <span>Shape my soul in united</span>
+          <span class="pl-playing" id="pl-play-0" style="display:none">▶</span>
+        </div>
+        <div class="pl-item" onclick="selectTrack(1)">
+          <span class="pl-num">2</span>
+          <span>Untuk Mencintaimu</span>
+          <span class="pl-playing" id="pl-play-1" style="display:none">▶</span>
+        </div>
+        <div class="pl-item" onclick="selectTrack(2)">
+          <span class="pl-num">3</span>
+          <span>Terbuang Dalamwaktu</span>
+          <span class="pl-playing" id="pl-play-2" style="display:none">▶</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. JAR -->
+  <section class="jar-section">
+    <div class="section reveal">
+      <div class="section-title">Alasan Saya Bersyukur Mengenal Yor</div>
+      <div class="section-divider">— 🫙 —</div>
+    </div>
+    <div class="jar-wrap reveal">
+      <span class="jar-emoji" id="jarEmoji">🫙</span>
+      <br>
+      <button class="shake-btn" onclick="shakeJar()">Kocok stoplesnya 💕</button>
+      <div class="jar-msg" id="jarMsg"></div>
+    </div>
+  </section>
+
+  <!-- 10. CLOSING -->
+  <section class="closing-section">
+    <div class="closing-text reveal">
+      Semoga hidupmu senantiasa dipenuhi bunga.<br>
+     dan cinta yang tak pernah habis 🤍
+    </div>
+    <div class="closing-deco">🌸</div>
+  </section>
+
+</div><!-- /main -->
+
+<script src="p.js"></script>
+</body>
+</html>
